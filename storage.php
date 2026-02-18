@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 
 // Configuración
 $connectionString = getenv("Azure_Storage_Connection_String");
-$containerName = "comprimidos";
+$containerName = "comprimits";
 
 if (!$connectionString) {
     die("La variable Azure_Storage_Connection_String no está configurada.");
