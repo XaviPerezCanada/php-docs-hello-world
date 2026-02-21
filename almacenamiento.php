@@ -4,6 +4,7 @@ require 'vendor/autoload.php';
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
+use MicrosoftAzure\Storage\Common\Exceptions\ServiceExceptions;
 
 // Configuración de seguridad para producción
 ini_set('display_errors', 0);
@@ -12,7 +13,7 @@ ini_set('log_errors', 1);
 
 // Configuración
 $connectionString = getenv("AZURE_STORAGE_CONNECTION_STRING");
-$containerName = "comprimidos";
+$containerName = "comprimits";
 $maxFileSize = 100 * 1024 * 1024; // 100 MB máximo
 
 if (!$connectionString) {
