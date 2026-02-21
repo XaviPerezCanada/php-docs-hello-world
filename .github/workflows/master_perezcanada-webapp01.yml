@@ -21,12 +21,9 @@ jobs:
       # Validamos e instalamos dependencias directamente
       - name: Install dependencies
         run: |
-          if [ -f "composer.json" ]; then
-            composer validate --no-check-publish
-            composer install --prefer-dist --no-progress
-          else
-            echo "No composer.json found, skipping install."
-          fi
+          rm -rf vendor
+          rm -f composer.lock
+          composer install --prefer-dist --no-progress --no-dev
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
