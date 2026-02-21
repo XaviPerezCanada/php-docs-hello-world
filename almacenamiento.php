@@ -9,7 +9,9 @@ ini_set('display_errors', 0);
 error_reporting(E_ALL);
 
 // Configuración
-$connectionString = getenv("AZURE_STORAGE_CONNECTION_STRING");
+$connectionString = $_ENV["AZURE_STORAGE_CONNECTION_STRING"] 
+                    ?? $_SERVER["AZURE_STORAGE_CONNECTION_STRING"] 
+                    ?? getenv("AZURE_STORAGE_CONNECTION_STRING");
 $containerName = "comprimits";
 
 if (!$connectionString) {
