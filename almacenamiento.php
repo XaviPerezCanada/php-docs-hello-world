@@ -1,24 +1,31 @@
 <?php
 
 require 'vendor/autoload.php';
-
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
-use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
 
-ini_set('display_errors', 0);
-error_reporting(E_ALL);
-
-// Configuración
-$connectionString = $_ENV["AZURE_STORAGE_CONNECTION_STRING"] 
-                    ?? $_SERVER["AZURE_STORAGE_CONNECTION_STRING"] 
-                    ?? getenv("AZURE_STORAGE_CONNECTION_STRING");
-$containerName = "comprimidos";
-
+// Intenta leer la variable desde $_SERVER (más fiable en Azure App Service)
+$connectionString = $_SERVER['AZURE_STORAGE_CONNECTION_STRING'] ?? getenv("AZURE_STORAGE_CONNECTION_STRING");
+$containerName = "comprimits";
 if (!$connectionString) {
-    die("La variable AZURE_STORAGE_CONNECTION_STRING no está configurada.");
+    die("Error: La variable AZURE_STORAGE_CONNECTION_STRING no está llegando al script. Verifica 'Configuración' en el portal de Azure.");
 }
 
-$blobClient = BlobRestProxy::createBlobService($connectionString);
+try {
+    $blobClient = BlobRestProxy::createBlobService($connectionString);
+} catch (Exception $e) {
+    die("Error al crear el cliente de Azure: " . $e->getMessage());
+}
+// Configuración
+// $connectionString = $_ENV["AZURE_STORAGE_CONNECTION_STRING"] 
+//                     ?? $_SERVER["AZURE_STORAGE_CONNECTION_STRING"] 
+//                     ?? getenv("AZURE_STORAGE_CONNECTION_STRING");
+
+
+// if (!$connectionString) {
+//     die("La variable AZURE_STORAGE_CONNECTION_STRING no está configurada.");
+// }
+
+// $blobClient = BlobRestProxy::createBlobService($connectionString);
 
 // Descargar archivo si se solicita
 if (isset($_GET['download_blob'])) {
